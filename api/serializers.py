@@ -7,12 +7,11 @@ from rest_framework import exceptions
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
-    TokenRefreshView,
 )
-from api.models import User
+from api.models import User, FriendRequest
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    
+
     username_field = 'email'
 
     def validate(self, attrs):
@@ -44,3 +43,10 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
+
+
+class FriendRequestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FriendRequest
+        fields = ['id', 'sender', 'receiver', 'accepted', 'rejected']

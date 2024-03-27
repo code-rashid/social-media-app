@@ -78,3 +78,29 @@ class User(AbstractUser):
         related_name='custom_user_permissions'
     )
 
+
+
+class UserActivityConstraints(BaseModel):
+
+    request_limit = models.IntegerField(default=3)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+
+class FriendRequest(BaseModel):
+
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_requests')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_requests')
+    accepted = models.BooleanField(default=False)
+    rejected = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ['sender', 'receiver']
+
+
+class Friendship(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendships_as_user')
+    friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendships_as_friend')
+
+    class Meta:
+        unique_together = ['user', 'friend']
