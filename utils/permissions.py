@@ -8,7 +8,7 @@ from django.utils import timezone
 class HasRequestLimit(permissions.BasePermission):
 
     '''
-        check user has enough credits or not to create new business
+        check user not exceded friends request limit
     '''
 
     def has_permission(self, request, view):

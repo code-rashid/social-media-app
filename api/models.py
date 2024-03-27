@@ -81,7 +81,9 @@ class User(AbstractUser):
 
 
 class UserActivityConstraints(BaseModel):
-
+    '''
+        Store constraints threshold here
+    '''
     request_limit = models.IntegerField(default=3)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -91,7 +93,6 @@ class FriendRequest(BaseModel):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_requests')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_requests')
     accepted = models.BooleanField(default=False)
-    rejected = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ['sender', 'receiver']
